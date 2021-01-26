@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:compSecure/kriptor.dart';
 
 void main() {
-  criptor("abc", "123");
+  criptor("zzzzz", "12345");
   runApp(MyApp());
 }
 

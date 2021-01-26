@@ -1,3 +1,5 @@
+import 'package:flutter/material.dart';
+
 const List<String> ALPHABET = [
   "a",
   "b",
@@ -37,9 +39,12 @@ criptor<String>(String string, String key) {
   print("keyStep: $keyList");
 
   for (var i = 0; i < word.length; i++) {
-    var c = int.parse(keyList[i].toString());
-    int wordStep = ALPHABET.indexOf(word[i]) + c;
-    newWord.add(ALPHABET[wordStep]);
+    var step = int.parse(keyList[i].toString());
+    int wordStep = ALPHABET.indexOf(word[i]) + step;
+    if (wordStep >= 26) {
+      newWord.add(ALPHABET[step]);
+    } else
+      newWord.add(ALPHABET[wordStep]);
   }
   print("КОНЕЧНАЯ СТРОКА ${newWord.join()}");
 }

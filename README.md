@@ -1,8 +1,8 @@
 # compSecure
 
-A new Flutter project.
+Приложение для урок по компьютерной безопасности
 
-## Getting Started
+## Шифратор Гронсвельда
 
 This project is a starting point for a Flutter application.
 

@@ -1,8 +1,11 @@
+import 'package:compSecure/bloc/criptor_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:compSecure/kriptor.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:compSecure/popUp.dart';
 
+String inputData;
 void main() {
-  criptor("zzzzz", "12345");
   runApp(MyApp());
 }
 
@@ -25,111 +28,116 @@ class MyApp extends StatelessWidget {
 }
 
 class ToEncrypt extends StatelessWidget {
-  TextEditingController inputController = TextEditingController();
-
+  final inputController = TextEditingController();
   @override
   Widget build(BuildContext context) {
-    Future<void> popupWindow() async {
-      await Future.delayed(Duration(seconds: 3));
-      showDialog(
-          context: context,
-          builder: (context) {
-            return Dialog(
-                child: Container(
-                    height: 150,
-                    width: 300,
-                    child: Column(children: [
-                      Padding(
-                          padding: EdgeInsets.only(top: 20),
-                          child: Text(
-                            "Результат Зашифровки",
-                            style: TextStyle(fontSize: 20),
-                            textAlign: TextAlign.center,
-                          )),
-                      Padding(
-                          padding: EdgeInsets.only(top: 20),
-                          child: Text(
-                            "ТУТ БУДЕТ РЕЗУЛЬТАТ",
-                            style: TextStyle(fontSize: 20),
-                            textAlign: TextAlign.center,
-                          )),
-                      SizedBox(
-                        height: 15,
-                      ),
-                      Expanded(
-                          child: Container(
-                        alignment: Alignment.bottomCenter,
-                        margin:
-                            EdgeInsets.only(bottom: 20, left: 10, right: 10),
-                        child: RaisedButton(
-                          color: Colors.blueAccent,
-                          textColor: Colors.white,
-                          child: Text("OK", style: TextStyle(fontSize: 18)),
-                          onPressed: () {
-                            Navigator.of(context).pop();
-                          },
-                        ),
-                      ))
-                    ])));
-          }).then((vallue) {
-        print('closed');
-      });
-    }
-
-    return Scaffold(
-        appBar: AppBar(
-          leading: IconButton(
-            icon: Icon(Icons.chevron_left),
-            color: Color(0xff2A7EFD),
-            onPressed: () {},
+    return BlocProvider(
+      create: (context) => CriptorBloc(),
+      child: Scaffold(
+          appBar: AppBar(
+            leading: IconButton(
+              icon: Icon(Icons.chevron_left),
+              color: Color(0xff2A7EFD),
+              onPressed: () {},
+            ),
+            title: Text(
+              "Лабораторная #1",
+              style: TextStyle(color: Colors.black, fontSize: 19),
+            ),
           ),
-          title: Text(
-            "Лабораторная #1",
-            style: TextStyle(color: Colors.black, fontSize: 19),
-          ),
-        ),
-        body: SingleChildScrollView(
-            physics: ScrollPhysics(),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Padding(
-                    padding: EdgeInsets.only(left: 15, top: 8),
-                    child: Text(
-                        "Введите сообщение которое необходимо зашифровать",
-                        style: TextStyle(
-                            fontSize: 14, fontWeight: FontWeight.bold))),
-                Container(
-                    decoration: BoxDecoration(
-                        color: Color(0xffFFFFFF),
-                        border: Border.all(color: Color(0xffFFFFFF)),
-                        borderRadius: BorderRadius.circular(9.0)),
-                    margin: EdgeInsets.only(left: 15, top: 17, right: 21),
-                    child: Padding(
-                        padding: EdgeInsets.only(left: 12, top: 16, bottom: 17),
-                        child: TextFormField(
-                          controller: inputController,
-                          decoration: InputDecoration.collapsed(hintText: ''),
-                        ))),
-                Container(
-                    margin: EdgeInsets.only(left: 18, right: 18, top: 21),
-                    child: MaterialButton(
-                      minWidth: double.infinity,
-                      height: 52,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(8.0),
-                      ),
-                      onPressed: () {
-                        popupWindow();
-                      },
-                      color: Color(0xff8EB8FF),
-                      textColor: Color(0xffF3F5FA),
-                      child: Text(
-                        "",
-                        style: TextStyle(fontSize: 16),
-                      ),
-                    )),
-              ],
-            )));
+          body: BlocConsumer<CriptorBloc, CriptorState>(
+            builder: (context, state) {
+              if (state is CriptorMainState) {
+                return SingleChildScrollView(
+                  physics: ScrollPhysics(),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Padding(
+                          padding: EdgeInsets.only(left: 15, top: 8),
+                          child: Text(
+                              "Введите сообщение которое необходимо зашифровать",
+                              style: TextStyle(
+                                  fontSize: 14, fontWeight: FontWeight.bold))),
+                      Container(
+                          decoration: BoxDecoration(
+                              color: Color(0xffFFFFFF),
+                              border: Border.all(color: Color(0xffFFFFFF)),
+                              borderRadius: BorderRadius.circular(9.0)),
+                          margin: EdgeInsets.only(left: 15, top: 17, right: 21),
+                          child: Padding(
+                              padding: EdgeInsets.only(
+                                  left: 12, top: 16, bottom: 17),
+                              child: TextFormField(
+                                controller: inputController,
+                                decoration:
+                                    InputDecoration.collapsed(hintText: ''),
+                              ))),
+                      Container(
+                          margin: EdgeInsets.only(left: 18, right: 18, top: 21),
+                          child: MaterialButton(
+                            child: Text(" <-- Зашифровать --> ",
+                                style: TextStyle(fontSize: 16)),
+                            minWidth: double.infinity,
+                            height: 52,
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(8.0),
+                            ),
+                            onPressed: () {
+                              newWord.clear();
+                              BlocProvider.of<CriptorBloc>(context).add(CriptIt(
+                                  "${inputController.text.replaceAll(new RegExp(r"\s+\b|\b\s"), "")}",
+                                  inputController.text
+                                      .replaceAll(new RegExp(r"\s+\b|\b\s"), "")
+                                      .length));
+                            },
+                            color: Color(0xff8EB8FF),
+                            textColor: Color(0xffF3F5FA),
+                          )),
+                      Container(
+                          margin: EdgeInsets.only(left: 18, right: 18, top: 21),
+                          child: MaterialButton(
+                            child: Text(" <-- Дешифровать --> ",
+                                style: TextStyle(fontSize: 16)),
+                            minWidth: double.infinity,
+                            height: 52,
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(8.0),
+                            ),
+                            onPressed: () {
+                              newWord.clear();
+                              BlocProvider.of<CriptorBloc>(context).add(DecrtiptIT(
+                                  "${inputController.text.replaceAll(new RegExp(r"\s+\b|\b\s"), "")}",
+                                  inputController.text
+                                      .replaceAll(new RegExp(r"\s+\b|\b\s"), "")
+                                      .length));
+                            },
+                            color: Color(0xff8EB8FF),
+                            textColor: Color(0xffF3F5FA),
+                          )),
+                    ],
+                  ),
+                );
+              }
+              return SizedBox();
+            },
+            listener: (context, state) {
+              if (state is LoadingState) {
+                return showDialog(
+                    context: context,
+                    builder: (context) => Center(
+                          child: CircularProgressIndicator(),
+                        ));
+              }
+              if (state is CloseLoadingState) {
+                Navigator.of(context, rootNavigator: true).pop();
+              }
+              if (state is PopUpState) {
+                popupWindow(newWord.join(), context);
+              }
+            },
+            buildWhen: (previous, current) => current is CriptorMainState,
+          )),
+    );
   }
 }

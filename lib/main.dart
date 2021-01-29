@@ -88,6 +88,7 @@ class ToEncrypt extends StatelessWidget {
                             ),
                             onPressed: () {
                               isEncrypt = true;
+                              // keyList.add(randomizer);
                               encryptWord.clear();
                               BlocProvider.of<CriptorBloc>(context).add(CriptIt(
                                   "${inputController.text.replaceAll(new RegExp(r"\s+\b|\b\s"), "")}",
@@ -110,9 +111,14 @@ class ToEncrypt extends StatelessWidget {
                             ),
                             onPressed: () {
                               isEncrypt = false;
-
+                              decryptWord.clear();
                               BlocProvider.of<CriptorBloc>(context).add(
-                                  DecriptIT(encryptWord.join(), currentKey));
+                                  DecriptIT(
+                                      encryptWord.join(),
+                                      inputController.text
+                                          .replaceAll(
+                                              new RegExp(r"\s+\b|\b\s"), "")
+                                          .length));
                             },
                             color: Color(0xff8EB8FF),
                             textColor: Color(0xffF3F5FA),

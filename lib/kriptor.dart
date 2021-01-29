@@ -32,22 +32,23 @@ List rALPHABET = ALPHABET.reversed.toList();
 List encryptWord = [];
 List decryptWord = [];
 bool isCriptor;
-int currentKey;
-int length;
-var randomizer = new Random();
-var keyList = List.generate(length, (_) => randomizer.nextInt(9));
+List currentKey;
+// int lData;
+
 criptor<String>(
   String string,
   int lengthData,
 ) {
-  length = lengthData;
   int encryptStep;
   int decryptStep;
+  // lData = lengthData;
+  var randomizer = new Random().nextInt(9);
+  var keyList = List.generate(lengthData, (_) => randomizer);
 
   print("ИСХОДНАЯ СТРОКА $string");
 
   List word = string.toString().toLowerCase().split("");
-  print("keyStep: $keyList");
+  // print("keyStep: $keyList");
 
   // for (var i = 0; i < word.length; i++) {
   //   var step = int.parse(keyList[i].toString());
@@ -68,8 +69,9 @@ criptor<String>(
   //     newWord.add(ALPHABET[wordStep]);
   // }
   for (var i = 0; i < word.length; i++) {
-    currentKey = int.parse(keyList[i].toString());
     var step = int.parse(keyList[i].toString());
+
+    // currentKey = int.parse(keyList[i].toString());
     switch (isCriptor) {
       case true:
         {
@@ -79,11 +81,14 @@ criptor<String>(
                 .add(ALPHABET[step - 1 - (25 - ALPHABET.indexOf(word[i]))]);
           } else
             encryptWord.add(ALPHABET[encryptStep]);
+
+          currentKey = keyList;
         }
         break;
       case false:
         {
-          decryptStep = ALPHABET.indexOf(word[i]) - step;
+          var rstep = int.parse(currentKey[i].toString());
+          decryptStep = ALPHABET.indexOf(word[i]) - rstep;
           if (decryptStep < 0) {
             decryptWord.add(ALPHABET[26 + decryptStep]);
           } else {

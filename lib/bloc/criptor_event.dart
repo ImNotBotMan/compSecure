@@ -13,6 +13,8 @@ class CriptIt extends CriptorEvent {
 class DecriptIT extends CriptorEvent {
   final String string;
   final int key;
-
-  DecriptIT(this.string, this.key);
+  DecriptIT(
+    this.string,
+    this.key,
+  );
 }

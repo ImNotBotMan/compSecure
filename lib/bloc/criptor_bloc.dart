@@ -15,7 +15,7 @@ class CriptorBloc extends Bloc<CriptorEvent, CriptorState> {
     CriptorEvent event,
   ) async* {
     yield LoadingState();
-    await Future.delayed(Duration(seconds: 2));
+    await Future.delayed(Duration(seconds: 1));
     if (event is CriptIt) {
       isCriptor = true;
       await criptor(event.string, event.key);

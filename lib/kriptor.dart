@@ -28,12 +28,11 @@ const List<String> ALPHABET = [
   "y",
   "z"
 ];
-List rALPHABET = ALPHABET.reversed.toList();
+
 List encryptWord = [];
 List decryptWord = [];
 bool isCriptor;
 List currentKey;
-// int lData;
 
 criptor<String>(
   String string,
@@ -41,37 +40,17 @@ criptor<String>(
 ) {
   int encryptStep;
   int decryptStep;
-  // lData = lengthData;
+
   var randomizer = new Random().nextInt(9);
   var keyList = List.generate(lengthData, (_) => randomizer);
 
   print("ИСХОДНАЯ СТРОКА $string");
 
   List word = string.toString().toLowerCase().split("");
-  // print("keyStep: $keyList");
 
-  // for (var i = 0; i < word.length; i++) {
-  //   var step = int.parse(keyList[i].toString());
-  //   if (isCriptor) {
-  //     wordStep = ALPHABET.indexOf(word[i]) + step;
-  //   } else
-  //     wordStep = ALPHABET.indexOf(word[i]) - step;
-
-  //   if (wordStep >= 26) {
-  //     newWord.add(ALPHABET[step - 1]);
-  //   }
-  //   if (wordStep <= -1) {
-  //     List rALPHABET = ALPHABET.reversed.toList();
-  //     print(rALPHABET);
-  //     int rwordStep = rALPHABET.indexOf(word[i]) - step;
-  //     newWord.add(rALPHABET[rwordStep - 1]);
-  //   } else
-  //     newWord.add(ALPHABET[wordStep]);
-  // }
   for (var i = 0; i < word.length; i++) {
     var step = int.parse(keyList[i].toString());
 
-    // currentKey = int.parse(keyList[i].toString());
     switch (isCriptor) {
       case true:
         {

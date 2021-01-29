@@ -54,7 +54,7 @@ class ToEncrypt extends StatelessWidget {
                 return SingleChildScrollView(
                   physics: ScrollPhysics(),
                   child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
                       Padding(
                           padding: EdgeInsets.only(left: 15, top: 8),
@@ -62,6 +62,13 @@ class ToEncrypt extends StatelessWidget {
                               "Введите текст который необходимо зашифровать",
                               style: TextStyle(
                                   fontSize: 14, fontWeight: FontWeight.bold))),
+                      Text("Текст нужно вводить на английском языке",
+                          style: TextStyle(
+                              fontSize: 14, fontWeight: FontWeight.bold)),
+                      SizedBox(height: 50),
+                      Text("Дешефратор использует последнее ввдененное слово",
+                          style: TextStyle(
+                              fontSize: 14, fontWeight: FontWeight.bold)),
                       Container(
                           decoration: BoxDecoration(
                               color: Color(0xffFFFFFF),
@@ -123,6 +130,12 @@ class ToEncrypt extends StatelessWidget {
                             color: Color(0xff8EB8FF),
                             textColor: Color(0xffF3F5FA),
                           )),
+                      SizedBox(
+                        height: 20,
+                      ),
+                      Text("Белицкий Марк и Никоноров Артём",
+                          style: TextStyle(
+                              fontSize: 14, fontWeight: FontWeight.bold)),
                     ],
                   ),
                 );

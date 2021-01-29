@@ -7,7 +7,7 @@ Future<void> popupWindow(
       builder: (context) {
         return Dialog(
             child: Container(
-                height: 350,
+                height: 300,
                 width: 300,
                 child: Column(children: [
                   Padding(

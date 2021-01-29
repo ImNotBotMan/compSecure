@@ -10,9 +10,9 @@ class CriptIt extends CriptorEvent {
   CriptIt(this.string, this.key);
 }
 
-class DecrtiptIT extends CriptorEvent {
+class DecriptIT extends CriptorEvent {
   final String string;
   final int key;
 
-  DecrtiptIT(this.string, this.key);
+  DecriptIT(this.string, this.key);
 }

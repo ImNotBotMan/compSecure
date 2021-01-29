@@ -17,12 +17,16 @@ class CriptorBloc extends Bloc<CriptorEvent, CriptorState> {
     yield LoadingState();
     await Future.delayed(Duration(seconds: 2));
     if (event is CriptIt) {
-      await criptor(event.string, event.key, true);
+      isCriptor = true;
+      await criptor(event.string, event.key);
+      yield CloseLoadingState();
+      yield PopUpState();
     }
-    if (event is DecrtiptIT) {
-      await criptor(event.string, event.key, false);
+    if (event is DecriptIT) {
+      isCriptor = false;
+      await criptor(event.string, event.key);
+      yield CloseLoadingState();
+      yield PopUpState();
     }
-    yield CloseLoadingState();
-    yield PopUpState();
   }
 }

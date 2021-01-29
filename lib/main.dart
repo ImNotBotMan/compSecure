@@ -2,9 +2,12 @@ import 'package:compSecure/bloc/criptor_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:compSecure/kriptor.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:compSecure/popUp.dart';
+import 'package:compSecure/pop_up.dart';
+
+import 'kriptor.dart';
 
 String inputData;
+bool isEncrypt;
 void main() {
   runApp(MyApp());
 }
@@ -56,7 +59,7 @@ class ToEncrypt extends StatelessWidget {
                       Padding(
                           padding: EdgeInsets.only(left: 15, top: 8),
                           child: Text(
-                              "Введите сообщение которое необходимо зашифровать",
+                              "Введите текст который необходимо зашифровать",
                               style: TextStyle(
                                   fontSize: 14, fontWeight: FontWeight.bold))),
                       Container(
@@ -84,7 +87,8 @@ class ToEncrypt extends StatelessWidget {
                               borderRadius: BorderRadius.circular(8.0),
                             ),
                             onPressed: () {
-                              newWord.clear();
+                              isEncrypt = true;
+                              encryptWord.clear();
                               BlocProvider.of<CriptorBloc>(context).add(CriptIt(
                                   "${inputController.text.replaceAll(new RegExp(r"\s+\b|\b\s"), "")}",
                                   inputController.text
@@ -105,12 +109,10 @@ class ToEncrypt extends StatelessWidget {
                               borderRadius: BorderRadius.circular(8.0),
                             ),
                             onPressed: () {
-                              newWord.clear();
-                              BlocProvider.of<CriptorBloc>(context).add(DecrtiptIT(
-                                  "${inputController.text.replaceAll(new RegExp(r"\s+\b|\b\s"), "")}",
-                                  inputController.text
-                                      .replaceAll(new RegExp(r"\s+\b|\b\s"), "")
-                                      .length));
+                              isEncrypt = false;
+
+                              BlocProvider.of<CriptorBloc>(context).add(
+                                  DecriptIT(encryptWord.join(), currentKey));
                             },
                             color: Color(0xff8EB8FF),
                             textColor: Color(0xffF3F5FA),
@@ -133,7 +135,8 @@ class ToEncrypt extends StatelessWidget {
                 Navigator.of(context, rootNavigator: true).pop();
               }
               if (state is PopUpState) {
-                popupWindow(newWord.join(), context);
+                popupWindow(
+                    encryptWord.join(), decryptWord.join(), isEncrypt, context);
               }
             },
             buildWhen: (previous, current) => current is CriptorMainState,
